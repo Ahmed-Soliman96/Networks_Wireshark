@@ -12,7 +12,19 @@ class my_thread(threading.Thread):
         self._stop_event = threading.Event()
         thread = threading.Thread(target=self.run, args=())
         thread.daemon = True                            # Daemonize thread
-        thread.start()  
+        thread.start()                              #starts by default as soon as called
+
+    """
+    #########  To call a function in the thread  #########
+    
+        def __init__(self, target, *args):
+            self._target = target
+            self._args = args
+            threading.Thread.__init__(self)
+
+        def run(self):
+            self._target(*self._args)
+    """
 
     def stop(self):
         self._stop_event.set()
