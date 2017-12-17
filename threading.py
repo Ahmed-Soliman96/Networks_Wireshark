@@ -5,7 +5,7 @@ class my_thread(threading.Thread):
     """Thread class with a stop() method. The thread itself has to check
     regularly for the stopped() condition."""
 
-    pkts=[] # if this thread is for GUI, then the pkts variable is not needed
+    pkts=[] 
 
     def __init__(self):
         super(my_thread, self).__init__()
@@ -25,7 +25,7 @@ class my_thread(threading.Thread):
             # Do something
             print('Doing something imporant in the background')
 
-    def return_packets(): # if this thread is for GUI, then the return_packets function is not needed
+    def return_packets(): # this function is to retrive the packets outside the thread
         return my_thread.pkts
 
 
