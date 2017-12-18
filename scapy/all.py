@@ -26,24 +26,24 @@ from scapy.route import *
 if conf.ipv6_enabled:
     from scapy.utils6 import *
     from scapy.route6 import *
-    from scapy.sendrecv import *
-    from scapy.supersocket import *
-    from scapy.volatile import *
-    from scapy.as_resolvers import *
+from scapy.sendrecv import *
+from scapy.supersocket import *
+from scapy.volatile import *
+from scapy.as_resolvers import *
 
-    from scapy.ansmachine import *
-    from scapy.automaton import *
-    from scapy.autorun import *
+from scapy.ansmachine import *
+from scapy.automaton import *
+from scapy.autorun import *
 
-    from scapy.main import *
-    from scapy.consts import *
-    from scapy.compat import raw
+from scapy.main import *
+from scapy.consts import *
+from scapy.compat import raw
 
-    from scapy.layers.all import *
+from scapy.layers.all import *
 
-    from scapy.asn1.asn1 import *
-    from scapy.asn1.ber import *
-    from scapy.asn1.mib import *
+from scapy.asn1.asn1 import *
+from scapy.asn1.ber import *
+from scapy.asn1.mib import *
 
-    from scapy.pipetool import *
-    from scapy.scapypipes import *
+from scapy.pipetool import *
+from scapy.scapypipes import *

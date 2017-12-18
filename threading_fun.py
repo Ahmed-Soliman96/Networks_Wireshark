@@ -40,7 +40,8 @@ class my_thread(threading.Thread):
     def return_packets(): # this function is to retrive the packets outside the thread
         return my_thread.pkts
 
-
+"""
 t = my_thread()
 time.sleep(1)
 t.stop()
+"""
