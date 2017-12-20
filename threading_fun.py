@@ -32,23 +32,37 @@ class my_thread(threading.Thread):
 
     def stopped(self):
         return self._stop_event.is_set()
+<<<<<<< HEAD
 
     def run(self, funct, args):
         """
+=======
+    def run(self, funct, args):
+        """ 
+>>>>>>> 809105bc74ddb33f9a8201b5c25dc2ab6708784a
         Method that runs forever
 
         ## Arguments
         + funct : A function object to be called
         + args : List of arguments
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 809105bc74ddb33f9a8201b5c25dc2ab6708784a
         ## Usage
         run(print_Hello, ['hello', 'world'])
         will attempt to call print_hello('hello', 'world')
         """
         while not self.stopped():
             # Do something
+<<<<<<< HEAD
             funct(args[0])  # , args[1])
             # print('Doing something imporant in the background')
+=======
+            funct(args[0], args[1])
+            #print('Doing something imporant in the background')
+>>>>>>> 809105bc74ddb33f9a8201b5c25dc2ab6708784a
 
     def return_packets():  # this function is to retrive the packets outside the thread
         return my_thread.pkts
