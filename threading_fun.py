@@ -47,13 +47,13 @@ class my_thread(threading.Thread):
         """
         while not self.stopped():
             # Do something
-            funct(args[0])  # , args[1])
+            funct(args[0], args[1], args[2])
             # print('Doing something imporant in the background')
-
+"""
     def return_packets():  # this function is to retrive the packets outside the thread
         return my_thread.pkts
 
-
+"""
 """
 t = my_thread()
 time.sleep(1)

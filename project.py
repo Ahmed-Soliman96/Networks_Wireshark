@@ -3,6 +3,7 @@ from scapy.sendrecv import *
 import threading_fun
 
 pkts = []
+pktstosave = []
 pktslst = {}
 intfces = {}
 
@@ -16,10 +17,13 @@ def get_interfaces():
 
 """INTO THREAD"""
 """When clicking start bottun to sniff packets ||| Also can be used for filtering packets by setting the 'pktsfilter' as we want"""
-def sniff_packets(pktscount = 0, interface = conf.iface, pktsfilter = None): #conf.iface == connected interface
+def sniff_packets(pktscount = 0, interface = None, pktsfilter = None): #conf.iface == connected interface
     global pkts
     pkts = sniff(count = pktscount,iface = interface, filter = pktsfilter)
-    return pkts
+    pktstosave.append(pkts)
+    #We will make it returns(or prints) the packets to their window inside this function
+    print(get_info(pkts[0]))
+
 """OUT OF THREAD"""
 
 """When choosing a specific filter for shown packets
@@ -37,7 +41,7 @@ def get_hexa(pkt):
 def display_packetdata(pkt):
     pkt.display()
 
-"""What to be viewed in the GUI of Wireshark packets' list"""
+"""What to be viewed in the GUI of WireShark packets' list"""
 def get_info(pkt):
     pkttime = pkt.time
     pktsource = pkt[IP].src
@@ -57,15 +61,31 @@ def make_packetslist(pkts):
 def save_file(flname, pkts, app=False):
     wrpcap(filename=flname, pkt=pkts, append=app)
 
-#####################################
-t = threading_fun.my_thread() #Try to run in an independent thread, but still doesn't work
-t.run(sniff_packets,[0]) #To be used used on clicking start #Assume 10 packets only and no filters as example, It works
-print(make_packetslist(pkts)) #Dectionary to be used in the packets' view window
-save_file("mypackets.pcap", pkts)
 
-"""
-    for i in range(len(pkts)):
-        print(get_hexa(pkts[i]))
-        display_packetdata(pkts[i])
-"""
-#time.sleep(1)
+
+"""LET'S START OUR FUNCTIONS"""
+sniffing_thread = threading_fun.my_thread()
+
+#If start sniffing button is clicked
+#Try to run in an independent thread, Assume 10 packets and no filters as example. It works
+sniffing_thread.run(sniff_packets,[1,conf.iface,None])
+#Still doesn't work id infinte sniffing
+####################################
+
+#If stop sniffing button is clicked
+sniffing_thread.stop()
+####################################
+
+#If a packet is clicked on, get it's no.'i' and display its data and hexa-value
+#display_packetdata(pkts[i])
+#get_hexa(pkt[i])
+####################################
+
+#If a filter is set:
+#pkts IS Empty -> sniffing_thread.run(sniff_packets,[10,conf.iface,filter])
+#pkts IS NOT Empty -> show only pkts.values()[3] == filter $$ Please make sure of this condition
+####################################
+
+#If save button is clicked
+save_file("mypackets.pcap", pktstosave)
+####################################
