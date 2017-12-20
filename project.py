@@ -44,11 +44,23 @@ def display_packetdata(pkt):
 """What to be viewed in the GUI of WireShark packets' list"""
 def get_info(pkt):
     pkttime = pkt.time
-    pktsource = pkt[IP].src
-    pktdestination = pkt[IP].dst
-    pktprotocol = pkt[IP].proto
+    if(pkt.haslayer(IP)):
+        pkttype = 'IP'
+        pktsource = packet[IP].src
+        pktdestination = packet[IP].dst
+    elif(pkt.haslayer(Ether)):
+        pkttype = 'Ether'
+        pktsource = packet[Ether].src
+        pktdestination = packet[Ether].dst
+    elif(pkt.haslayer(TCP)):
+        pkt_type = 'TCP'
+        pktsource = packet[TCP].sport
+        pktdestination = packet[TCP].dport
     pktinfo = pkt.summary()
-    return [pkttime,pktsource,pktdestination,pktprotocol,pktinfo]
+    # pktsource = pkt[IP].src
+    # pktdestination = pkt[IP].dst
+    # pktprotocol = pkt[IP].proto
+    return [pkttime,pktsource,pktdestination,pkttype,pktinfo]
 
 """Creates a dectionary of what to be viewed in the GUI of Wireshark packets' list"""
 def make_packetslist(pkts):
