@@ -1,9 +1,6 @@
 from scapy.all import*
 from scapy.sendrecv import *
 import project
-from PyQt4.QtGui import * 
-from PyQt4.QtCore import * 
-
 from PyQt4 import QtCore, QtGui
 
 try:
@@ -14,6 +11,7 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 stp = False
+pck = []
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -40,7 +38,7 @@ class Ui_Dialog(object):
         self.btn_save = QtGui.QPushButton(self.grp)
         self.btn_save.setObjectName("btn_save")
         self.horizontalLayout.addWidget(self.btn_save)
-        #self.btn_save.clicked.connect(self.Save)
+        self.btn_save.clicked.connect(self.Save)
         #self.btn_save.setEnabled(False)
                         
         self.gridLayout_2.addWidget(self.grp, 0, 1, 1, 1)
@@ -58,8 +56,9 @@ class Ui_Dialog(object):
         self.tbl.setColumnCount(5)
         self.tbl.setRowCount(0)
         self.verticalLayout_2.addWidget(self.tbl)
-        #self.tbl.setHorizontalHeaderLabels(QString("Time;Source;Destination;Protocol;Info").split(";"))
-        #self.tbl.setItem(0,0, QtGui.QTableWidgetItem("Item (1,1)"))
+        self.tbl.cellClicked.connect(self.handleCellClicked)
+        self.tbl.setHorizontalHeaderLabels(QString("Time;Source;Destination;Protocol;Info").split(";"))
+        
         
         
         self.txt = QtGui.QTextBrowser(self.scrollAreaWidgetContents_3)
@@ -84,13 +83,18 @@ class Ui_Dialog(object):
         self.in_fltr = QtGui.QLineEdit(self.grp_fltr)
         self.in_fltr.setObjectName("in_fltr")
         self.horizontalLayout_2.addWidget(self.in_fltr)
-        
+
         self.gridLayout_2.addWidget(self.grp_fltr, 1, 1, 2, 1)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         
-
+    def handleCellClicked (self, row, col):
+        global pck
+        pcktxt = project.display_packetdata(pck[row])
+        self.txt.setText(pcktxt)
+        pckhex = project.get_hexa(pck[row])
+        self.hexa.setText(pckhex)
         
     def Show_Pkts(self, pkt):
         rowPosition = self.tbl.rowCount()
@@ -101,17 +105,22 @@ class Ui_Dialog(object):
         self.tbl.setItem(rowPosition,3, QtGui.QTableWidgetItem(str(pkt[3])))
         self.tbl.setItem(rowPosition,4, QtGui.QTableWidgetItem(str(pkt[4])))
 
- 
+    
+    def Save(self):
+        project.save(pck)
+        
     def Start(self):
-        pck = sniff(count=3)
-        for xy in range(len(pck)):
-            inf = project.get_info(pck[xy])
+        global pck
+        pckx = sniff(count=3)
+        
+        for xy in range(len(pckx)):
+            pck.append(pckx[xy])
+            inf = project.get_info(pckx[xy])
             self.Show_Pkts(inf)
        
     def Stop(self,stp):
         stp = not stp   
 
-    
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Wireshark", None))
         self.btn_start.setText(_translate("Dialog", "Start", None))
