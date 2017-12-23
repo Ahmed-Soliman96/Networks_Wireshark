@@ -46,16 +46,16 @@ def get_info(pkt):
     pkttime = pkt.time
     if(pkt.haslayer(IP)):
         pkttype = 'IP'
-        pktsource = packet[IP].src
-        pktdestination = packet[IP].dst
+        pktsource = pkt[IP].src
+        pktdestination = pkt[IP].dst
     elif(pkt.haslayer(Ether)):
         pkttype = 'Ether'
-        pktsource = packet[Ether].src
-        pktdestination = packet[Ether].dst
+        pktsource = pkt[Ether].src
+        pktdestination = pkt[Ether].dst
     elif(pkt.haslayer(TCP)):
         pkt_type = 'TCP'
-        pktsource = packet[TCP].sport
-        pktdestination = packet[TCP].dport
+        pktsource = pkt[TCP].sport
+        pktdestination = pkt[TCP].dport
     pktinfo = pkt.summary()
     # pktsource = pkt[IP].src
     # pktdestination = pkt[IP].dst
@@ -80,24 +80,31 @@ sniffing_thread = threading_fun.my_thread()
 
 #If start sniffing button is clicked
 #Try to run in an independent thread, Assume 10 packets and no filters as example. It works
-sniffing_thread.run(sniff_packets,[1,conf.iface,None])
+def start():
+    sniffing_thread.run(sniff_packets,[1,conf.iface,None])
 #Still doesn't work id infinte sniffing
 ####################################
-
+start()
 #If stop sniffing button is clicked
-sniffing_thread.stop()
+def stop():
+    sniffing_thread.stop()
 ####################################
 
 #If a packet is clicked on, get it's no.'i' and display its data and hexa-value
-#display_packetdata(pkts[i])
-#get_hexa(pkt[i])
+"""
+def pkg_data():
+    display_packetdata(pkts[i])
+    get_hexa(pkt[i])
+"""
 ####################################
-
+"""
 #If a filter is set:
-#pkts IS Empty -> sniffing_thread.run(sniff_packets,[10,conf.iface,filter])
-#pkts IS NOT Empty -> show only pkts.values()[3] == filter $$ Please make sure of this condition
+def pkg_filter():
+    pkts IS Empty -> sniffing_thread.run(sniff_packets,[10,conf.iface,filter])
+    pkts IS NOT Empty -> show only pkts.values()[3] == filter $$ Please make sure of this condition
 ####################################
-
+"""
 #If save button is clicked
-save_file("mypackets.pcap", pktstosave)
+def save():
+    save_file("mypackets.pcap", pktstosave)
 ####################################
