@@ -39,7 +39,7 @@ def get_hexa(pkt):
 
 """When you double click on a packet its data should be viewed"""
 def display_packetdata(pkt):
-    pkt.display()
+    return (pkt._show_or_dump(dump=True))
 
 """What to be viewed in the GUI of WireShark packets' list"""
 def get_info(pkt):
@@ -76,28 +76,28 @@ def save_file(flname, pkts, app=False):
 
 
 """LET'S START OUR FUNCTIONS"""
-sniffing_thread = threading_fun.my_thread()
+#sniffing_thread = threading_fun.my_thread()
 
 #If start sniffing button is clicked
 #Try to run in an independent thread, Assume 10 packets and no filters as example. It works
+"""
 def start():
     sniffing_thread.run(sniff_packets,[1,conf.iface,None])
+
 #Still doesn't work id infinte sniffing
 ####################################
-start()
+#start()
+pkts = sniff(5,conf.iface,None)
 #If stop sniffing button is clicked
 def stop():
     sniffing_thread.stop()
 ####################################
-
+#display_packetdata(pkts[1])
 #If a packet is clicked on, get it's no.'i' and display its data and hexa-value
-"""
 def pkg_data():
     display_packetdata(pkts[i])
     get_hexa(pkt[i])
-"""
 ####################################
-"""
 #If a filter is set:
 def pkg_filter():
     pkts IS Empty -> sniffing_thread.run(sniff_packets,[10,conf.iface,filter])
@@ -105,6 +105,6 @@ def pkg_filter():
 ####################################
 """
 #If save button is clicked
-def save():
-    save_file("mypackets.pcap", pktstosave)
+def save(tosave):
+    save_file("mypackets.pcap", tosave)
 ####################################
