@@ -50,6 +50,8 @@ def get_info(pkt):
     else:
         pkttype = (typ[1]).split(' ')[0]
 
+    if (pkttype == 'Padding') or (pkttype[0].isdigit()):
+        pkttype = 'IGMP'
     return [pkttime,pktsource,pktdestination,pkttype,pktinfo]
 
 #Creates a dectionary of what to be viewed in the GUI of Wireshark packets' list
