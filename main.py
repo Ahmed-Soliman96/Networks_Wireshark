@@ -118,11 +118,12 @@ class Sniffer(QtGui.QDialog, design.Ui_Dialog):
     def saver(self):
         global pck
         global pck2
+        name = QtGui.QFileDialog.getSaveFileName(self, 'Save File')
         if len(pck2) == 0:
-            project.save(pck)
+            project.save(pck,str(name))
         else:
-            project.save(pck2)
-
+            project.save(pck2,str(name))
+            
 def main():
     app = QtGui.QApplication(sys.argv)
     form = Sniffer()
