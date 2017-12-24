@@ -9,7 +9,7 @@ import design
 pck = []
 pck2 = []
 filtr = ''
-inface = ''
+inface = 'All Network Interfaces'
 counter = 0
 
 class snThread(QThread):
