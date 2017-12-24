@@ -43,9 +43,7 @@ def get_info(pkt):
         else:
             pkttype = (typ[3]).split(' ')[0]
     elif len(typ) == 3:
-        if (typ[1])[0].isnumeric():
-            pkttype = 'TCP'
-        elif ((typ[2]).split(' ')[0] == 'TCP') or ((typ[2]).split(' ')[0] == 'UDP') or ((typ[2]).split(' ')[0] == 'ARP'):
+        if ((typ[2]).split(' ')[0] == 'TCP') or ((typ[2]).split(' ')[0] == 'UDP') or ((typ[2]).split(' ')[0] == 'ARP'):
             pkttype = (typ[2]).split(' ')[0]
         else:
             pkttype = (typ[1]).split(' ')[0]
