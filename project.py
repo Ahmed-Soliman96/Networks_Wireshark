@@ -62,5 +62,5 @@ def make_packetslist(pkts):
     return pktslst
 
 #If save button is clicked
-def save(tosave, app=False):
-    wrpcap(filename="mypackets.pcap", pkt=tosave, append=app)
+def save(tosave, name, app=False):
+    wrpcap(filename=name+'.pcap', pkt=tosave, append=app)
