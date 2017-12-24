@@ -74,7 +74,7 @@ class Sniffer(QtGui.QDialog, design.Ui_Dialog):
         global filtr
         global counter
         todisp = project.get_info(pck[counter]) 
-        if (filtr == '' or filtr == str(todisp[3])):
+        if (filtr == '' or filtr == str(todisp[3]) or filtr[3:]==str(todisp[1]) or filtr[3:]==str(todisp[2])):
             rowPosition = self.tbl.rowCount()
             pck2.append(pck[counter])
             self.tbl.insertRow(rowPosition)
