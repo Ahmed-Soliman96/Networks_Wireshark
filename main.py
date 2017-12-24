@@ -64,8 +64,8 @@ class Sniffer(QtGui.QDialog, design.Ui_Dialog):
         self.btn_stop.setEnabled(True)
         self.btn_start.setEnabled(False)
         self.in_fltr.setEnabled(False)
-        self.btn_save.setEnabled(True)
         self.btn_apply.setEnabled(False)
+        self.btn_save.setEnabled(False)
         self.btn_stop.clicked.connect(self.stopper)
 
     def printer(self, pct_text):
@@ -91,6 +91,7 @@ class Sniffer(QtGui.QDialog, design.Ui_Dialog):
         self.btn_apply.setEnabled(True)
         self.btn_start.setEnabled(True)
         self.in_fltr.setEnabled(True)
+        self.btn_save.setEnabled(True)
         self.sn_thread.terminate()
 
     def applyer(self):
